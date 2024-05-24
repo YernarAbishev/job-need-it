@@ -25,6 +25,10 @@ class Company(models.Model):
 
         img = Image.open(self.logo.path)
 
+    class Meta:
+        verbose_name = "Компания"
+        verbose_name_plural = "Компании"
+
 
 class Job(models.Model):
     company = models.ForeignKey(Company, on_delete=models.CASCADE, related_name='jobs')
@@ -33,57 +37,60 @@ class Job(models.Model):
     location = models.CharField(max_length=80)
     created_date = models.DateTimeField(default=datetime.datetime.now(), blank=True)
     experience_choices = (
-        ('no-matter','مهم نیست'),
-        ('1-3', 'یک تا ۳ سال'),
-        ('3-6', 'سه تا ۶ سال'),
-        ('+6', 'بیشتر از ۶ سال'),
+        ('Нет опыта работы','Нет опыта работы'),
+        ('1-3 года', '1-3 года'),
+        ('3-6 года', '3-6 года'),
+        ('6 и выше', '6 и выше'),
     )
     experience = models.CharField(max_length=80, choices=experience_choices)
     salary_choices = (
-        ('agreement ', 'توافقی'),
-        ('from 3', 'از ۳ میلیون'),
-        ('from 5', 'از ۵ میلیون'),
-        ('from 8', 'از ۸ میلیون'),
-        ('from 10', 'از ۱۰ میلیون'),
-        ('from 12', 'از ۱۲ میلیون'),
-        ('from 15', 'از ۱۵ میلیون'),
+        ('Не указано', 'Не указано'),
+        ('от 100 000 до 190 000 тг.', 'от 100 000 до 190 000 тг.'),
+        ('от 200 000 до 290 000 тг.', 'от 200 000 до 290 000 тг.'),
+        ('от 300 000 до 390 000 тг.', 'от 300 000 до 390 000 тг.'),
+        ('от 400 000 до 490 000 тг.', 'от 400 000 до 490 000 тг.'),
+        ('от 500 000 и выше', 'от 500 000 и выше'),
     )
     salary = models.CharField(
         max_length=80, choices=salary_choices
     )
     cooperation_choices = (
-        ('full-time', 'تمام وقت'),
-        ('part-time', 'پاره وقت'),
-        ('remote', 'دور کاری'),
-        ('internship', 'کار آموزی'),
+        ('Полная занятость', 'Полная занятость'),
+        ('Частичная занятость', 'Частичная занятость'),
+        ('Удаленная работа', 'Удаленная работа'),
+        ('Стажировка', 'Стажировка'),
+        ('Производственная практика', 'Производственная практика'),
     )
     cooperation_type = models.CharField(
         max_length=80, choices=cooperation_choices
     )
     job_description = models.TextField()
     skills_required = models.CharField(max_length=80)
+    '''
     military_choices = (
-        ('no-matter', 'مهم نیست'),
-        ('end', 'پایان خدمت'),
+        ('Военнообязанный', 'Военнообязанный'),
+        ('Есть военный билет', 'Есть военный билет'),
     )
     military_service = models.CharField(
         max_length=80, choices=military_choices
     )
+    '''
     degree_choices = (
-        ('no-matter', 'مهم نیست'),
-        ('diploma', 'دیپلم'),
-        ('bachelor', 'لیسانس'),
+        ('Не имеет значения', 'Не имеет значения'),
+        ('Диплом ТиПО', 'Диплом ТиПО'),
+        ('Диплом бакалавра', 'Диплом бакалавра'),
+        ('Диплом магистра', 'Диплом магистра'),
+        ('Диплом Phd', 'Диплом Phd'),
     )
     degree = models.CharField(max_length=80, choices=degree_choices)
-    gender_choices = (
-        ('Male', 'مرد'),
-        ('Female', 'زن'),
-        ('not-matter','مهم نیست'),
-    )
-    gender = models.CharField(max_length=10, choices=gender_choices)
 
     def __str__(self):
         return self.title
+    
+
+    class Meta:
+        verbose_name = "Вакансия"
+        verbose_name_plural = "Вакансии"
     
     
 class JobRequests(models.Model):
@@ -96,7 +103,13 @@ class JobRequests(models.Model):
     viewed = models.BooleanField(default=False)
     
     def __str__(self):
-        return f'{self.jobseeker} requested on {self.job}'
+        return f'Запрос компании {self.jobseeker} на работу {self.job}'
     
     def save(self, *args, **kwargs):
         super(JobRequests, self).save(*args, **kwargs)
+    
+    class Meta:
+        verbose_name = "Запрос на вакансию"
+        verbose_name_plural = "Запросы на вакансию"
+
+    

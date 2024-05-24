@@ -1,24 +1,4 @@
-* {
-  font-family: myFirstFont;
-}
-@font-face {
-  font-family: myFirstFont;
-  src: url(iranyekanwebmediumfanum.woff);
-}
-body {
-    background: #fafafa;
-    color: #333333;
-    margin-top: 5rem;
-    text-align: right;
-  }
-  
-  h1, h2, h3, h4, h5, h6 {
-    color: #444444;
-  }
-  
-  .bg-steel {
-    background-color: #5f788a;
-  }
+
   
   .site-header .navbar-nav .nav-link {
     color: #cbd5db;
@@ -80,12 +60,7 @@ body {
     vertical-align: middle;
   }
   
-  .account-img {
-    height: 100px;
-    width: 100px;
-    margin-left: 10px;
-    border-radius: 5px;
-  }
+  
   
   .account-heading {
     font-size: 2.5rem;

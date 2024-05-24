@@ -35,7 +35,7 @@ def jobseeker_profile(request):
         if profile_form.is_valid() and resume_form.is_valid():
             profile_form.save()
             resume_form.save()
-            messages.success(request, 'پروفایل شما به روز شد')
+            messages.success(request, 'Ваш профиль обновлен')
             return redirect('jobseeker-profile')
     else: 
         profile_form = JobSeekerProfileForm(instance=request.user)
@@ -55,11 +55,11 @@ def request_job(request, id):
     if request.user.requests.filter(job=id):
         messages.warning(
             request,
-            ' قبلا برای این آگهی رزومه ارسال کرده اید'
+            'Вы уже отправили свое резюме по этому объявлению.'
         )
         return redirect('home-page')
     if not request.user.profile.resume:
-        messages.info(request, 'ابتدا رزومه ی خود را آپلود کنید')
+        messages.info(request, 'Сначала загрузите свое резюме.')
         return redirect('jobseeker-profile')
     job = get_object_or_404(Job, id=id)
     req = JobSeekerRequests(
@@ -72,9 +72,10 @@ def request_job(request, id):
         job=job,
         resume_url=request.user.profile.resume.url,
         employer=job.company,
+        
     )
     req_to_employer.save()
-    messages.success(request, 'رزومه شما ارسال شد')
+    messages.success(request, 'Ваше резюме отправлено')
     return redirect('home-page')
 
 
@@ -83,7 +84,7 @@ def request_job(request, id):
 def jobseeker_requests(request):
     requests = request.user.requests.all()
     if not requests:
-        messages.info(request, 'شما هنوز درخواستی ارسال نکرده اید')
+        messages.info(request, 'Вы еще не отправили запрос')
     return render(request, 'jobseeker_requests.html', {'requests':requests})
 
 
@@ -91,12 +92,12 @@ def jobseeker_requests(request):
 @user_passes_test(is_jobseeker)
 def save_job(request, id):
     if request.user.saved_jobs.filter(job=id):
-        messages.warning(request, 'این آگهی قبلا ذخیره شده')
+        messages.warning(request, 'Эта вакансия уже сохранена.')
         return redirect('home-page')
     job = get_object_or_404(Job, id=id)
     save_job = JobSeekerSaveJob(job=job, saved_job=request.user)
     save_job.save()
-    messages.success(request, 'آگهی ‌ذخیره شد')
+    messages.success(request, 'Вы сохранили вакансию')
     return redirect('home-page')
 
 
@@ -110,10 +111,10 @@ def jobseeker_saved_jobs(request):
 def cancel_request(request, id):
     jobseeker_req = get_object_or_404(request.user.requests, id=id)
     #request sent to employer
-    if jobseeker_req.status != 'تایید شده':
+    if jobseeker_req.status != 'Подтверждено':
         jobseeker_req = request.user.requests.filter(id=id).delete()
         employer_req = JobRequests.objects.filter(id=id).delete()
-        messages.success(request, 'درخواست شما لغو شد')
+        messages.success(request, 'Ваш запрос был отменен')
     else:
         raise Http404
     return redirect('jobseeker-requests')

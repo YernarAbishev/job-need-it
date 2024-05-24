@@ -1,18 +1,63 @@
 {% extends "base.html" %}
+{% load static %}
 {% load crispy_forms_tags %}
 {% block content %}
+<style>
+    label {
+        margin-bottom: 10px;
+        font-weight: 700;
+    }
+    #id_full_name, #id_email {
+        margin-bottom: 10px;
+    }
+    label {
+        cursor: pointer;
+    }
 
-<div class="content-section">
-    <form method="POST" enctype="multipart/form-data">
+    #id_resume {
+        color: transparent;
+    }
+    #id_resume::-webkit-file-upload-button {
+        visibility: hidden;
+    }
+    #id_resume::before {
+        content: 'Загрузить файл ➤';
+        color: #fff;
+        display: inline-block;
+        background: #106cf6;
+        border-radius: 3px;
+        padding: 5px 8px;
+        outline: none;
+        white-space: nowrap;
+        -webkit-user-select: none;
+        cursor: pointer;
+        font-weight: 700;
+        font-size: 10pt;
+    }
+    #id_resume:hover::before {
+        border-color: #fff;
+    }
+    #id_resume:active {
+        outline: 0;
+    }
+    #id_resume:active::before {
+        background: #106cf6;
+    }
+
+</style>
+<div class="">
+    <legend class="display-6 mb-4 blue" style="font-weight: 700;"><i class="fa-solid fa-user"></i> Мой профиль</legend>
+
+    <form class="content-section border border-0 shadow p-3 bg-body rounded" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         <fieldset class="form-group">
-            <legend class="border-bottom mb-4"></legend>
             {{ profile_form|crispy }}
             {{ resume_form|crispy }}
         </fieldset>
         <div class="form-group">
-            <button class="btn btn-info" style="width:100%;" type="submit">به روز رسانی</button>
+            <button class="button is-blue mt-3 mb-3" style="width:100%;" type="submit">Обновить</button>
         </div>
+        <a href="{% static './template.docx' %}" style="font-weight: 700;" download target="_blank" class="blue-link">Скачать шаблон резюме</a>
     </form>
 </div>
 

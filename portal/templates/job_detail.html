@@ -1,59 +1,39 @@
 {% extends "base.html" %}
 {% block content %}
 
-<article class="media content-section">
+<article class="content-section border border-0 shadow p-3  bg-body rounded">
   <div class="media-body">
-    <img class="account-img" src="{{ job.company.logo.url }}">
-    <a style="font-size: 30px;"> شرکت {{ job.company }}</a>
-    <small class="text-muted"><a href="{{ job.company.link }}">(وبسایت)</a></small>
+    <div class="row">
+      <div class="col-md-2">
+        <img class="account-img" src="{{ job.company.logo.url }}">
+      </div>
+      <div class="col-md-10">
+        <p style="font-size: 30px;" class="blue">{{ job.company }}</p>
+        <small class="text-muted">Сайт компании: <a class="blue-link" href="{{ job.company.link }}">{{ job.company.link }}</a></small>
+      </div>
+    </div>
+    
     <div class="article-metadata mt-2">
       </div>
-      <h3 class="article-title mt-3">{{ job.title }}</h3  >
+      <h3 class="blue mt-3">{{ job.title }}</h3>
+      <p>Категория: <span class="badge rounded-pill text-bg-primary">{{ job.category }}</span></p>
       <hr>
-      موقعیت مکانی:
-      <span class="job-property ml-5">
-        {{ job.location }}
-      </span>
-      دسته بندی : 
-      <span class="job-property" >
-        {{ job.category }}
-      </span><br><br>
-      سابقه کار:
-      <span class="job-property ml-5" >
-        {{ job.get_experience_display }}
-      </span>
-      حقوق:
-      <span class="job-property ml-5" >
-      {{ job.get_salary_display }}
-      </span>
-      نوع همکاری:
-      <span class="job-property" >
-      {{ job.get_cooperation_type_display }}
-    </span>
-    <legend class="mt-5 mb-3" >شرح موقعیت شغلی </legend>
-      <p class="article-content">{{ job.job_description }}</p>
-    <legend class="mt-5 mb-3">معرفی شرکت</legend>
-      <p class="mb-5">{{job.company.co_introduction}}</p>
-    <p>
-    مهارت های مورد نیاز:
-    </p>
-    <span class="job-property ml-5">
-        {{ job.skills_required }}
-    </span>
-    <br>
-    <br>
-    وضعیت نظام وظیفه:
-    <span class="job-property ml-5">
-      {{ job.get_military_service_display }}
-    </span>
-    تحصیلات:
-    <span class="job-property ml-5">
-      {{ job.get_degree_display }}
-    </span>
-    جنسیت:
-    <span class="job-property ">
-      {{ job.get_gender_display }}
-    </span>
+      <p>Опыт работы: <span class="badge rounded-pill text-bg-primary">{{ job.get_experience_display }}</span></p>
+
+      <p>Расположение: <span class="badge rounded-pill text-bg-primary">{{ job.location }}</span></p>
+      <p>Заработная плата: <span class="badge rounded-pill text-bg-primary">{{ job.get_salary_display }}</span></p>
+      <p>Занятость: <span class="badge rounded-pill text-bg-primary">{{ job.get_cooperation_type_display }}</span></p>
+    
+      <legend class="mb-3 blue">О компании</legend>
+      <p class="mb-3"><i>{{job.company.co_introduction}}</i></p>
+      <legend class="mb-3 blue" >Описание работы</legend>
+      <p class="article-content"><i>{{ job.job_description }}</i></p>
+      <p>Навыки: <span class="badge rounded-pill text-bg-primary">{{ job.skills_required }}</span></p>
+      <p>Образование: <span class="badge rounded-pill text-bg-primary">{{ job.get_degree_display }}</span></p>
+      <hr>
+      <div class="pt-2s pb-2">
+        <a class="button is-blue is-small" href="{% url 'request-job' job.id %}">Откликнуться</a>
+      </div>
   </div>      
 </article>
 

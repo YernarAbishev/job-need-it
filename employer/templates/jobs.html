@@ -3,36 +3,42 @@
 {% load crispy_forms_tags %}
 {% block content %}
 
-<div class="content-section">
-  <legend >آگهی های شما </legend>
-  <table class="table">
-    <thead class="thead-light">
-      <tr>
-        <th scope="col">عنوان آگهی</th>
-        <th scope="col">وضعیت</th>
-        <th scope="col">تاریخ ایجاد</th>
-        <th scope="col">تعداد درخواست</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for job in jobs %}             
+<div class="blocck">
+  <legend class="display-6 mb-4 blue" style="font-weight: 700;"><i class="fa-solid fa-building"></i> Вакансии компании</legend>
+  <div class="content-section border border-0 shadow p-3 bg-body rounded">
+    <table class="table">
+      <thead class="thead-light">
         <tr>
-          <td>{{job.title}}</td>
-          <td>---</td>
-          {% if job.created_date|naturalday == 'today' %}
-          <td>امروز</td>
-          {% elif job.created_date|naturalday == 'yesterday' %}
-          <td>دیروز</td>
-          {% elif job.created_date|naturalday == 'tomorrow' %}
-          <td>فردا</td>
-          {% else %}
-          <td >{{ job.created_date|naturaltime }}</td>
-          {% endif %}
-          <td>{{ number }}</td>
+          <th scope="col">Наименование вакансии</th>
+          <th scope="col">Дата публикации</th>
+          <th scope="col">Количество запросов</th>
+          <th scope="col">Действие</th>
         </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        {% for job in jobs %}             
+          <tr>
+            <td>{{ job.title }}</td>
+            {% if job.created_date|naturalday == 'today' %}
+            <td>Сегодня</td>
+            {% elif job.created_date|naturalday == 'yesterday' %}
+            <td>Вчера</td>
+            {% elif job.created_date|naturalday == 'tomorrow' %}
+            <td>Завтра</td>
+            {% else %}
+            <td >{{ job.created_date|naturaltime }}</td>
+            {% endif %}
+            <td>{{ number }}</td>
+            <form method="post" action="{% url 'delete-request' id=job.id %}">
+              {% csrf_token %}
+              <td><button type="submit" class="btn btn-danger">Удалить</button></td>
+
+            </form>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 </div>
 
 {% endblock %}

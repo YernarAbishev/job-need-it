@@ -1,0 +1,117 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100;200;300;400;500;600;700;800;900&display=swap');
+* {
+    font-family: 'Raleway', sans-serif;
+}
+.logo img {
+    width: 170px;
+}
+h1, h2, h3, h4, h5, h6, p, strong, b {
+    color: #004377;
+}
+button {
+    cursor: pointer;
+    border:none;
+}
+.header-link {
+    display: block;
+    padding: 0.5rem 1rem;
+    font-size: 16px;
+    font-weight: 500;
+    color: #fff;
+    text-decoration: none;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out;
+}
+
+.header-link:hover {    
+    color: #fff;
+}
+.button {
+    cursor: pointer;
+    border: none;
+    padding: 10px 35px;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+}
+.is-small {
+    padding: 10px;
+}
+.is-blue {
+    background-color: #0085EA;
+    transition: 0.3s ease-in-out;
+}
+.is-blue:hover {
+    color: #fff;
+    background-color: #004377;
+}
+.blue {
+    color: #0085EA;
+}
+.blue-link {
+    color: #0085EA;
+    transition: 0.3s ease-in-out;
+    text-decoration: none;
+}
+.red-link {
+    color: #f35764;
+    transition: 0.3s ease-in-out;
+    text-decoration: none;
+}
+.red-link:hover {
+    color: #cb555f;
+}
+.account-img {
+    margin: 0 auto;
+    width: 90px;
+    height: 90px;
+    margin-left: 10px;
+    border-radius: 5px;
+  }
+.blue-link:hover {
+    color: #004377;
+}
+.blue-text {
+    color: #0085EA;
+    display: block;
+}
+.blue-bottom-border {
+    border-bottom: 1px solid #0085EA;
+}
+.relative-content, .relative-img {
+    position: relative;
+}
+.relative-content {
+    top: 140px;
+}
+.relative-img {
+    top: 40px;
+}
+#main {
+    display: flex;
+    align-items: center;
+    height: 100vh;
+}
+#main h1 {
+    color: #004377;
+    margin-bottom: 20px;
+}
+#main p {
+    margin-bottom: 30px;
+}
+.list-group-item a {
+    display: block;
+    text-decoration: none;
+    margin-bottom: 15px;
+}
+.menu-block {
+    margin-top: 15px;
+}
+
+@media screen and (max-width: 700px) {
+    .main-image {
+        display: none;
+    }
+    .relative-content {
+        top: 0px;
+    }
+}

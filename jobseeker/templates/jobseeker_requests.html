@@ -1,31 +1,28 @@
 {% extends "base.html" %}
 {% block content %}
 
-<legend class="mb-4">درخواست های ارسال شده شما</legend>
+<legend class="display-6 mb-4 blue" style="font-weight: 700;"><i class="fa-solid fa-user-clock"></i> Мои запросы</legend>
 
-<table class="table table-sm" style="text-align: center;">
-    <thead>
-        <tr>
-            <th scope="col">آگهی</th>
-            <th scope="col">وضعیت</th>
-            <th scope="col">رزومه ارسال شده</th>
-            <th scope="col"></th>
-        </tr>
-    </thead>
-    {% for request in requests %}
-    <tbody>
-      <tr>
-        <td><a href="{% url 'job-detail' request.job.id %}">{{ request.job }}</a></td>
-        <td>{{ request.status }}</td>
-        <td><a target="_blank" href="{{ request.resume_url }}">مشاهده</a></td>
-        {% if request.status == 'تایید شده' %}
-        <td></td>
-        {% else %}
-        <td><a class="btn btn-danger" style="padding: 1px;font-size:12px;" href="{% url 'cancel-request' request.id %}">لغو درخواست</a></td>
-        {% endif %}
-      </tr>
-    </tbody>
-    {% endfor %}
-  </table>
 
+{% for request in requests %}
+{% if request.status == 'Подтверждено' %}
+<div class="content-section border border-0 shadow bg-body rounded">
+  <div class="card-body">
+    <h3><b>Компания: </b> {{ request.job.company }}</h3>
+    <p><b>Вакансия: </b>{{ request.job }}</p>
+    <div class="mb-3">
+      <a href="{% url 'job-detail' request.job.id %}" class="button is-blue is-small">Посмотреть вакансию</a>
+    </div>
+  </div>
+</div>
+{% else %}
+<div class="content-section border border-0 shadow bg-body rounded">
+  <div class="card-body">
+    <h3><b>Компания: </b> {{ request.job.company }}</h3>
+    <p><b>Вакансия: </b>{{ request.job }}</p>
+    <p><a class="btn btn-danger" target="_blank" href="{% url 'cancel-request' request.id %}">Отменить запрос</a></p>
+  </div>
+</div>
+{% endif %}
+{% endfor %}
 {% endblock %}

@@ -12,8 +12,8 @@ class JobSeekerProfileForm(forms.ModelForm):
     
     def __init__(self, *args, **kwargs):
         super(JobSeekerProfileForm, self).__init__(*args, **kwargs)
-        self.fields['full_name'].label = "نام و نام خانوادگی"
-        self.fields['email'].label = "ایمیل"
+        self.fields['full_name'].label = "Фамилия Имя Отчество"
+        self.fields['email'].label = "Электронная почта"
 
         
 class JobSeekerResumeForm(forms.ModelForm):
@@ -24,4 +24,4 @@ class JobSeekerResumeForm(forms.ModelForm):
     
     def __init__(self, *args, **kwargs):
         super(JobSeekerResumeForm, self).__init__(*args, **kwargs)
-        self.fields['resume'].label = "فایل رزومه"
+        self.fields['resume'].label = "Файл резюме (PDF)"

@@ -1,21 +1,21 @@
 {% extends "base.html" %}
 {% block content %}
 
-<legend class="mb-4">آگهی های نشان شده</legend>
+<legend class="display-6 mb-4 blue" style="font-weight: 700;"><i class="fa-solid fa-star"></i> Избранное</legend>
 
-<table class="table table-sm">
-    <thead>
-        <tr>
-            <th scope="col">آگهی</th>
-        </tr>
-    </thead>
-    {% for job in jobs %}
-    <tbody>
-      <tr>
-          <td><a href="{% url 'job-detail' job.id %}">{{ job.job }}</a> </td>
-      </tr>
-    </tbody>
-    {% endfor %}
-  </table>
+
+    <div class="row">
+      {% for job in jobs %}
+      <div class="col-md-6 mb-3">
+        <div class="content-section border border-0 shadow bg-body rounded h-100">
+          <div class="card-body">
+            <h6 class="mb-3">{{ job.job.title }}</h6>
+            <a class="button is-blue d-block text-center" href="{% url 'job-detail' job.job.id %}">Посмотреть</a> 
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+
+    </div>
 
 {% endblock %}

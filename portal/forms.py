@@ -6,38 +6,38 @@ from .models import User
 
 class UserRegisterForm(UserCreationForm):
     full_name = forms.CharField(
-        label='نام و نام خانوادگی',
+        label='Фамилия Имя Отчество',
         widget=forms.TextInput(
-           attrs={'placeholder': 'مثلا: علی محمدی',}
+           attrs={'placeholder': 'Введите ФИО',}
            )
         )
     email = forms.EmailField(
-        label='آدرس ایمیل',
+        label='Электронная почта',
         widget=forms.EmailInput(
-           attrs={'placeholder': 'آدرس ایمیل خود را وارد کنید'}
+           attrs={'placeholder': 'Введите e-mail'}
             )
         )
     password1 = forms.CharField(
-        label='رمز عبور',
+        label='Пароль',
         widget=forms.PasswordInput(
-            attrs={'placeholder': 'رمز عبور خود را وارد کنید'}
+            attrs={'placeholder': 'Введите пароль'}
             )
         )
     password2 = forms.CharField(
-        label='تکرار رمز عبور',
+        label='Подтверждение пароля',
         widget=forms.PasswordInput(
-            attrs={'placeholder': 'رمز عبور خود راتکرار کنید'}
+            attrs={'placeholder': 'Подтвердите пароль'}
             )
         )
     
     error_messages = {
-        'password_mismatch': "رمز عبور برابر نیست",
+        'password_mismatch': 'Пароли не совпадают',
     }
     
     def clean_email(self):
         email = self.cleaned_data.get("email")
         if User.objects.filter(email=email).exists():
-            raise forms.ValidationError("این ایمیل قبلا استفاده شده")
+            raise forms.ValidationError('Эта почта существует в платформе')
         return email
 
     class Meta:
@@ -47,14 +47,14 @@ class UserRegisterForm(UserCreationForm):
 
 class UserLoginForm(forms.Form):
     email = forms.EmailField(
-        label='آدرس ایمیل',
+        label='Электронная почта',
         widget=forms.EmailInput(
-           attrs={'placeholder': 'آدرس ایمیل خود را وارد کنید'}
+           attrs={'placeholder': 'Введите e-mail'}
         )
     )
     password = forms.CharField(
-        label='رمز عبور',
+        label='Пароль',
         widget=forms.PasswordInput(
-            attrs={'placeholder': 'رمز عبور خود را وارد کنید'}
+            attrs={'placeholder': 'Введите пароль'}
         )
     )

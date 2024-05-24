@@ -11,11 +11,11 @@ class EmployerProfileForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(EmployerProfileForm, self).__init__(*args, **kwargs)
-        self.fields['category'].label = "دسته بندی شرکت خود را انتخاب کنید"
-        self.fields['name'].label = "نام شرکت خود را وارد کنید"
-        self.fields['co_introduction'].label = "شرکت خود را معرفی کنید"
-        self.fields['logo'].label = "لوگوی خود را آپلود کنید"
-        self.fields['link'].label = "لینک وبسایت خود را وارد کنید"
+        self.fields['category'].label = "Укажите чем занимается ваша компания"
+        self.fields['name'].label = "Название компании"
+        self.fields['co_introduction'].label = "Представьте свою компанию"
+        self.fields['logo'].label = "Загрузите логотип"
+        self.fields['link'].label = "Введите ссылку на сайт компании"
 
 class EmployerJobCreationForm(forms.ModelForm):
     
@@ -25,22 +25,20 @@ class EmployerJobCreationForm(forms.ModelForm):
             'category', 'title', 'location',
             'experience', 'salary', 'cooperation_type',
             'job_description', 'skills_required',
-            'military_service', 'degree', 'gender',
+            'degree',
         ]
     
     def __init__(self, *args, **kwargs):
         super(EmployerJobCreationForm, self).__init__(*args, **kwargs)
-        self.fields['category'].label = "دسته بندی آگهی خود را انتخاب کنید"
-        self.fields['title'].label = "عنوان آگهی را وارد کنید"
-        self.fields['location'].label = "موقعیت مکانی شرکت را وارد کنید"
-        self.fields['experience'].label = "سابقه کار مورد نیاز"
-        self.fields['salary'].label = "حقوق پرداختی"
-        self.fields['cooperation_type'].label = "نوع همکاری"
-        self.fields['job_description'].label = "شرح موقعیت شغلی"
-        self.fields['skills_required'].label = "مهارت های مورد نیاز"
-        self.fields['military_service'].label = "وضعیت سربازی"
-        self.fields['gender'].label = "جنسیت"
-        self.fields['degree'].label = "تحصیلات"
+        self.fields['category'].label = "Выберите сферу деятельности"
+        self.fields['title'].label = "Введите названия вакансии"
+        self.fields['location'].label = "Введите местоположение вашей компании"
+        self.fields['experience'].label = "Требуемый опыт работы"
+        self.fields['salary'].label = "Заработная плата"
+        self.fields['cooperation_type'].label = "Занятость"
+        self.fields['job_description'].label = "Описание работы"
+        self.fields['skills_required'].label = "Требуемые навыки"
+        self.fields['degree'].label = "Образование"
 
 
 

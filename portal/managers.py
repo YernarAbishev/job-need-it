@@ -5,9 +5,9 @@ class MyUserManager(BaseUserManager):
     
     def create_user(self, email, full_name, password):
         if not email:
-            raise ValueError('users must have Email')
+            raise ValueError('Пользователи должны иметь электронную почту')
         if not full_name:
-            raise ValueError('users must have Full Name')
+            raise ValueError('Пользователи должны иметь полное ФИО')
         user = self.model(
             email=self.normalize_email(email), full_name=full_name
         )

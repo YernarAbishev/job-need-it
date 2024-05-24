@@ -1,74 +1,147 @@
 {% load static %}
-<html dir="rtl" lang="fa">
+<html lang="ru">
 <head>
-  <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-  <!-- my js -->
-  
-  <!-- Blog CSS -->
-  <link rel="stylesheet" type="text/css" href="{% static 'main.css' %}">
-  <!-- google Icons -->
+  <link rel="stylesheet" type="text/css" href="{% static './css/main.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static './css/style.css' %}">
+  <link rel="shortcut icon" href="{% static './img/favicon.svg' %}" type="image/x-icon">
+  <link rel="stylesheet" href="{% static './css/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <!--<script src="https://lidrekon.ru/slep/js/jquery.js"></script>
+  <script src="https://lidrekon.ru/slep/js/uhpv-full.min.js"></script>-->
   {% if title %}
   <title>{{title}}</title>
   {% else %}
-  <title>پرتال استخدام آنلاین جنگو</title>
+  <title>Job need</title>
   {% endif %}
 </head>
+<style>
+  .accordion-button:focus {
+    box-shadow: none;
+  }
+</style>
 <body>
-<!-- Navbar -->
-  <header>
-    <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
-      <div class="container">
-        <a class="navbar-brand mr-4" href="{% url 'home-page' %}">پرتال استخدام آنلاین جنگو</a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span></button>
-            <div class="collapse navbar-collapse" id="navbarToggle">
-              <div class="navbar-nav mr-auto">
-                <!-- search form -->
-                <form class="form-inline my-2 my-lg-0 ml-5" action="{% url 'search' %}">
-                  <button class="btn btn-info my-2 my-sm-0" type="submit">جستجو</button>
-                  <input name="q" data-filter="1" class="form-control mr-sm-1" type="search" aria-label="Search">
-                </form>
-              </div>
-            <!-- Navbar Right Side -->
-            <div class="navbar-nav">
-              {% if user.is_authenticated %}
-                {% if not user.is_jobseeker %}
-                  {% if user.company.jobs %}
-                    <a class="nav-item nav-link" href="{% url 'employer-jobs' %}">آگهی های من</a>
-                    <a class="nav-item nav-link" href="{% url 'employer-create-job' %}">آگهی جدید</a>
-                    <a class="nav-item nav-link" href="{% url 'employer-profile' %}">پروفایل</a>
-                    <a class="nav-item nav-link" href="{% url 'logout' %}">خروج</a>
-                  {% else %}
-                    <a class="nav-item nav-link" href="{% url 'employer-profile' %}">پروفایل</a>
-                    <a class="nav-item nav-link" href="{% url 'logout' %}">خروج</a>
-                  {% endif %}
-                {% endif %}
-              {% if user.is_jobseeker %}
-                <a class="nav-item nav-link" href="{% url 'saved-jobs' %}">نشان شده ها</a>
-                <a class="nav-item nav-link" href="{% url 'jobseeker-requests' %}">درخواست های من</a>
-                <a class="nav-item nav-link" href="{% url 'jobseeker-profile' %}">پروفایل</a>
-                <a class="nav-item nav-link" href="{% url 'logout' %}">خروج</a>
-              {% endif %}
-              {% else %}
-                <a class="nav-item nav-link" href="{% url 'employer-register' %}">بخش کارفرمایان</a>
-                <a class="nav-item nav-link" href="{% url 'register' %}">ثبت نام کارجو</a>
-                <a class="nav-item nav-link" href="{% url 'login' %}">ورود</a>
-              {% endif %}
-            </div>
-          </div>
-
-        </div>
-      </nav>
-    </header>
+<header class="navbar navbar-expand-lg navbar-light bg-primary blue-bottom-border mb-5 ">
+  <div class="container">
+    <a class="navbar-brand logo" href="{% url 'home-page' %}">
+      <img src="{% static './img/logo.svg' %}" alt="Logo">
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        {% if user.is_authenticated %}
+          {% if not user.is_jobseeker %}
+            {% if user.company.jobs %}
+            <li class="nav-item">
+              <a class="header-link" href="{% url 'employer-home' %}">Запросы</a>
+            </li>
+            <li class="nav-item">
+              <a class="header-link" href="{% url 'employer-jobs' %}">Вакансии компании</a>
+            </li>
+            <li class="nav-item">
+              <a class="header-link" href="{% url 'employer-create-job' %}">Создать вакансию</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="header-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                {{ user.email }}&nbsp;<i class="fa-solid fa-circle-dot"></i>
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{% url 'employer-profile' %}"><i class="fa-solid fa-building"></i>&nbsp;Профиль компании</a></li>
+                <form method="post" action="{% url 'logout' %}">
+                     {% csrf_token %}
+                <li><button class="dropdown-item" type="submit"><i class="fa-solid fa-circle-xmark"></i>&nbsp;Выход</button></li>
+                </form>    
+              </ul>
+            </li>
+            {% else %}
+            <li class="nav-item">
+              <a class="header-link" href="{% url 'employer-profile' %}">Профиль компании</a>
+            </li>
+                <form method="post" action="{% url 'logout' %}">
+                 {% csrf_token %}
+                <li><button class="dropdown-item" type="submit"><i class="fa-solid fa-circle-xmark"></i>&nbsp;Выход</button></li>
+                </form>  
+            {% endif %}
+          {% endif %}
+        {% if user.is_jobseeker %}
+            <li class="nav-item">
+              <a class="header-link" href="{% url 'home-page' %}">Вакансии</a> 
+            </li>
+            <li class="nav-item">
+              <a class="header-link" href="{% url 'saved-jobs' %}">Избранное</a> 
+            </li>
+            <li class="nav-item">
+              <a class="header-link" href="{% url 'jobseeker-requests' %}">Мои запросы</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="header-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                {{ user.email }}&nbsp;<i class="fa-solid fa-circle-dot white-text"></i>
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{% url 'jobseeker-profile' %}"><i class="fa-solid fa-user"></i>&nbsp;Мой профиль</a></li>
+                <form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                <li><button class="dropdown-item" type="submit"><i class="fa-solid fa-circle-xmark"></i>&nbsp;Выход</button></li>
+                </form>  
+              </ul>
+            </li>
+        {% endif %}
+        {% else %}
+          <li class="nav-item">
+            <a class="header-link" href="{% url 'employer-register' %}">Работодателям</a>
+          </li>
+          <li class="nav-item">
+            <a class="header-link" href="{% url 'register' %}">Найти работу</a>
+          </li>
+          <li class="nav-item">
+            <a class="header-link" href="{% url 'login' %}">Вход</a>
+          </li>            
+        {% endif %}
+        <!--Версия для слабовидящих
+          <li class="nav-item">
+          <img id="specialButton" style="cursor:pointer; width: 28px; margin-left: 20px; margin-right: 25px; margin-top: 6px;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/OOjs_UI_icon_eye-progressive.svg/1024px-OOjs_UI_icon_eye-progressive.svg.png" alt="ВЕРСИЯ ДЛЯ СЛАБОВИДЯЩИХ" title="ВЕРСИЯ ДЛЯ СЛАБОВИДЯЩИХ" />
+        </li>-->
+      </ul>
+      <form class="d-flex mt-3" action="{% url 'search' %}">
+        <input name="q" data-filter="1" class="form-control border border-secondary me-2" type="search" aria-label="Search" placeholder="Поиск вакансии">
+        <button class="btn btn-outline-light is-small" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+      </form>
+    </div>
+  </div>
+</header>
     <main role="main" class="container">
         <div class="row">
-          <div class="col-md-9">
-            <!-- flash messages -->
+          <div class="col-md-4">
+            <legend class="display-6 mb-4 blue" style="font-weight: 700;"><i class="fa-solid fa-clipboard-list"></i> Категории</legend>
+            <div class="content-section p-4 border border-0 shadow p-3 mb-5 bg-body rounded">           
+                <div class="accordion accordion-flush" id="accordionFlushExample">
+                  <div class="accordion-item">
+                    <h2 class="accordion-header">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                        <h4 class="text-center blue mb-0">Список категорий</h4>
+                      </button>
+                    </h2>
+                    <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                      <div class="accordion-body">
+                        {% for category in categories %}
+                          <li class="list-group-item">
+                            <small><a href="{% url 'filter-by-category' category %}">{{ category }}</a></small>
+                          </li>
+                        {% endfor %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+
+            </div>
+          </div>
+          <div class="col-md-8">
             {% if messages %}
               {% for message in messages %}
                 <div class="alert alert-{{ message.tags }}">
@@ -78,69 +151,25 @@
             {% endif %}
             {% block content %}{% endblock %}
           </div>
-          <div class="col-md-3">
-            <div class="content-section">
-                <h6>
-                  <i class="material-icons ml-1" style="vertical-align: middle;">&#xe3c7;</i>دسته بندی ها
-                </h6>
-                {% for category in categories %}
-                <li class="list-group-item">
-                  <a href="{% url 'filter-by-category' category %}" style="color:grey;">
-                    <input type="checkbox" style="vertical-align: middle;">
-                    {{ category }}
-                  </a>
-                </li>
-              {% endfor %}
-                <h6 class="mt-3">
-                  <i class="material-icons mb-1 ml-1" style="vertical-align: middle;font-size: 20px;">&#xe0c8;</i>استان
-                </h6>
-                {% for category in categories %}
-                <li class="list-group-item">
-                  <a href="{% url 'filter-by-category' category %}" style="color:grey;">
-                    <input type="checkbox" style="vertical-align: middle;">
-                    {{ category }}
-                  </a>
-                </li>
-              {% endfor %}
-              <h6 class="mt-3">
-                <i class="material-icons mb-1 ml-1" style="vertical-align: middle;font-size: 20px;">&#xe8f9;</i>نوع قرار داد
-              </h6>
-              {% for category in categories %}
-              <li class="list-group-item">
-                <a href="{% url 'filter-by-category' category %}" style="color:grey;">
-                  <input type="checkbox" style="vertical-align: middle;">
-                  {{ category }}
-                </a>
-              </li>
-            {% endfor %}
-            <h6 class="mt-3">
-              <i class="material-icons mb-1 ml-1" style="vertical-align: middle;font-size: 20px;">&#xe416;</i>سابقه کار
-            </h6>
-            {% for category in categories %}
-            <li class="list-group-item">
-              <a href="{% url 'filter-by-category' category %}" style="color:grey;">
-                <input type="checkbox" style="vertical-align: middle;">{{ category }}
-              </a>
-            </li>
-          {% endfor %}
-          <h6 class="mt-3">
-            <i class="material-icons mb-1 ml-1" style="vertical-align: middle;font-size: 20px;">&#xe227;</i>حداقل حقوق
-          </h6>
-          {% for category in categories %}
-          <li class="list-group-item">
-            <a href="{% url 'filter-by-category' category %}" style="color:grey;">
-              <input type="checkbox" style="vertical-align: middle;">{{ category }}
-            </a>
-          </li>
-        {% endfor %}
-            </div>
-          </div>
+          
         </div>
     </main>
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+
+
+    <footer class="d-flex flex-wrap justify-content-between align-items-center mt-5 pt-5 pb-5 bg-dark">
+      <div class="container">
+        <div class="col-md-4 d-flex align-items-center">
+          <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
+            <img src="{% static './img/favicon.svg' %}" width="32px" alt="Logo">
+          </a>
+          <span class="mb-3 mb-md-0 text-white">jobneed.it © <span id="year"></span>. Разработчик: <a href="#" class="text-white" style="font-weight: 600; text-decoration: none;">Естаев Данат</a></span>
+        </div>
+      </div>
+    </footer>
+    <script src="{% static './js/bootstrap.bundle.min.js' %}"></script>
+    <script>
+      document.getElementById("year").innerHTML = new Date().getFullYear();
+    </script>
 </body>
 </html>
